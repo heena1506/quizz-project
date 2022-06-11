@@ -1,0 +1,108 @@
+package BinaryTreeWork;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class OrderTraversalBinaryTree {
+    static Node root;
+    static class Node {
+        int data;
+        Node left;
+        Node right;
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+    }
+
+    private void InorderTraversal(Node rootNode){
+        if(rootNode !=null){
+            InorderTraversal(rootNode.left);
+            System.out.print(rootNode.data+" ");
+            InorderTraversal(rootNode.right);
+        }
+
+    }
+    private void PreorderTraversal(Node rootNode){
+        if(rootNode !=null){
+            System.out.print(rootNode.data+" ");
+            PreorderTraversal(rootNode.left);
+            PreorderTraversal(rootNode.right);
+        }
+
+    }
+    private void PostTraversal(Node rootNode){
+        if(rootNode !=null){
+            PostTraversal(rootNode.left);
+            PostTraversal(rootNode.right);
+            System.out.print(rootNode.data+" ");
+        }
+
+    }
+    private void LevelOrder(){
+
+        Queue<Node> queue = new LinkedList<>();
+        Node temp =root;
+        queue.add(temp);
+
+        while(!queue.isEmpty()){
+            temp = queue.poll();
+            System.out.print(temp.data+" ");
+            if(temp.left!=null){
+                queue.add(temp.left);
+            }
+            if(temp.right!=null){
+                queue.add(temp.right);
+            }
+        }
+    }
+    private void insert(int data){
+        Node node= new Node(data);
+        if(root==null){
+            root =node;
+        }
+        else {
+            Queue<Node> queue = new LinkedList<>();
+            Node temp =root;
+            queue.add(temp);
+            while(!queue.isEmpty()){
+                temp = queue.poll();
+
+                if(temp.left!=null){
+                    queue.add(temp.left);
+                }else{
+                    temp.left =node;
+                    break;
+                }
+                if(temp.right!=null){
+                    queue.add(temp.right);
+                }else{
+                    temp.right = node;
+                    break;
+                }
+            }
+        }
+    }
+    public static void main(String[] args) {
+        OrderTraversalBinaryTree btree= new OrderTraversalBinaryTree();
+        btree.insert(10);
+        btree.insert(20);
+        btree.insert(30);
+        btree.insert(40);
+        btree.insert(50);
+        System.out.println("level order traversal");
+        btree.LevelOrder();
+        System.out.println("");
+        System.out.println("In-order traversal");
+        btree.InorderTraversal(root);
+        System.out.println("");
+        System.out.println("pre-order traversal");
+        btree.PreorderTraversal(root);
+        System.out.println("");
+        System.out.println("Post-order traversal");
+        btree.PostTraversal(root);
+
+    }
+}
